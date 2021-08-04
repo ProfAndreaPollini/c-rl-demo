@@ -23,16 +23,29 @@
 #include "raymath.h"
 
 const int TILE_SIZE = 16;
+const int MAP_W = 80;
+const int MAP_H = 50;
 
+int map[MAP_W][MAP_H];
 
+void set_map_cell(int x, int y, int value) {
+    map[x][y] = value;
+}
 
 int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    int screen_width = 80*TILE_SIZE;
-    int screen_height = 50*TILE_SIZE;
+    int screen_width = MAP_W*TILE_SIZE;
+    int screen_height = MAP_H*TILE_SIZE;
     Vector2 hero_pos = {10,10};
+
+
+    //map[20][20] = 1;
+    for (int i = 0; i < 10; ++i) {
+        set_map_cell(i,i,1);
+    }
+
 
 
 
@@ -56,8 +69,7 @@ int main()
         ClearBackground(RAYWHITE);
 
 
-        DrawRectangle(hero_pos.x
-        *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,RED);
+
         if (IsKeyPressed(KEY_W)) {
             hero_pos.y -=1;
         }
@@ -70,6 +82,17 @@ int main()
         if (IsKeyPressed(KEY_D)) {
             hero_pos.x +=1;
         }
+
+        for (int i = 0; i < MAP_H; ++i) {
+            for (int j = 0; j < MAP_W; ++j) {
+                if ( map[j][i] == 1) {
+                    DrawCircle((j+0.5)*TILE_SIZE,(i+0.5)*TILE_SIZE,TILE_SIZE/2,BLUE);
+                }
+            }
+        }
+
+        DrawRectangle(hero_pos.x
+        *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,RED);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
