@@ -32,6 +32,10 @@ void set_map_cell(int x, int y, int value) {
     map[x][y] = value;
 }
 
+bool can_hero_move(int x, int y) {
+    return map[x][y] == 0;
+}
+
 int main()
 {
     // Initialization
@@ -68,19 +72,31 @@ int main()
 
         ClearBackground(RAYWHITE);
 
-
+        int dx = 0;
+        int dy = 0;
 
         if (IsKeyPressed(KEY_W)) {
-            hero_pos.y -=1;
+            //hero_pos.y -=1;
+            dy = -1;
         }
         if (IsKeyPressed(KEY_S)) {
-            hero_pos.y +=1;
+            //hero_pos.y +=1;
+            dy=1;
         }
         if (IsKeyPressed(KEY_A)) {
-            hero_pos.x -=1;
+            //hero_pos.x -=1;
+            dx = -1;
         }
         if (IsKeyPressed(KEY_D)) {
-            hero_pos.x +=1;
+//            hero_pos.x +=1;
+            dx = 1;
+        }
+
+        if (dx !=0 || dy != 0) {
+            if (can_hero_move(hero_pos.x+dx,hero_pos.y+dy)) {
+                hero_pos.x +=dx;
+                hero_pos.y +=dy;
+            }
         }
 
         for (int i = 0; i < MAP_H; ++i) {
