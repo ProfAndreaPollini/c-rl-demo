@@ -31,6 +31,7 @@ int main()
     int screen_width = MAP_W*TILE_SIZE;
     int screen_height = MAP_H*TILE_SIZE;
     Vector2 hero_pos = {10,10};
+    Color hero_color = RED;
 
     Vector2 potion_pos = {15,20};
     bool potion_used = false;
@@ -89,6 +90,7 @@ int main()
                 hero_pos.y +=dy;
                 if (hero_pos.x == potion_pos.x && hero_pos.y == potion_pos.y) {
                     potion_used = true;
+                    hero_color = BLACK;
                 }
             }
         }
@@ -102,7 +104,7 @@ int main()
         }
 
         DrawRectangle(hero_pos.x
-        *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,RED);
+        *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,hero_color);
 
         if(!potion_used) {
             DrawCircle((potion_pos.x+0.5)*TILE_SIZE,(potion_pos.y+0.5)*TILE_SIZE,TILE_SIZE/2,GREEN);
