@@ -20,15 +20,23 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include "raymath.h"
+
+const int TILE_SIZE = 16;
+
+
 
 int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    int screenWidth = 800;
-    int screenHeight = 450;
+    int screen_width = 80*TILE_SIZE;
+    int screen_height = 50*TILE_SIZE;
+    Vector2 hero_pos = {10,10};
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+
+
+    InitWindow(screen_width, screen_height, "raylib [core] example - basic window");
 
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
@@ -47,7 +55,9 @@ int main()
 
         ClearBackground(RAYWHITE);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+
+        DrawRectangle(hero_pos.x
+        *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,RED);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
