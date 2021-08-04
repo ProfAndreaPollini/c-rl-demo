@@ -58,6 +58,18 @@ int main()
 
         DrawRectangle(hero_pos.x
         *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,RED);
+        if (IsKeyPressed(KEY_W)) {
+            hero_pos.y -=1;
+        }
+        if (IsKeyPressed(KEY_S)) {
+            hero_pos.y +=1;
+        }
+        if (IsKeyPressed(KEY_A)) {
+            hero_pos.x -=1;
+        }
+        if (IsKeyPressed(KEY_D)) {
+            hero_pos.x +=1;
+        }
 
         EndDrawing();
         //----------------------------------------------------------------------------------
