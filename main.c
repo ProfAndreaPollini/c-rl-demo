@@ -24,6 +24,12 @@
 
 #include "map.h"
 
+typedef struct potion {
+    Vector2  pos;
+    Color color;
+    bool used;
+} Potion;
+
 int main()
 {
     // Initialization
@@ -32,9 +38,19 @@ int main()
     int screen_height = MAP_H*TILE_SIZE;
     Vector2 hero_pos = {10,10};
     Color hero_color = RED;
+    Potion potion = {
+            .pos = { 15,20},
+            .used = false,
+            .color = GREEN
+    };
+
+
 
     Vector2 potion_pos = {15,20};
     bool potion_used = false;
+
+    Vector2 monster_pos = {30,30};
+    Color monster_color = VIOLET;
 
 
     //map[20][20] = 1;
@@ -85,7 +101,7 @@ int main()
         }
 
         if (dx !=0 || dy != 0) {
-            if (can_hero_move(hero_pos.x+dx,hero_pos.y+dy)) {
+            if (can_move(hero_pos.x+dx,hero_pos.y+dy)) {
                 hero_pos.x +=dx;
                 hero_pos.y +=dy;
                 if (hero_pos.x == potion_pos.x && hero_pos.y == potion_pos.y) {
@@ -93,7 +109,32 @@ int main()
                     hero_color = BLACK;
                 }
             }
-        }
+
+            // monster moves
+            Vector2 monster_movement;
+            if (hero_pos.x > monster_pos.x)
+                monster_movement.x = 1;
+            if (hero_pos.x < monster_pos.x)
+                monster_movement.x = -1;
+
+            if (hero_pos.y > monster_pos.y)
+                monster_movement.y = 1;
+            if (hero_pos.y < monster_pos.y)
+                monster_movement.y = -1;
+
+
+                if (GetRandomValue(1,10)< 5) {
+                    if (can_move(monster_pos.x+monster_movement.x,monster_pos.y)) {
+                        monster_pos.x += monster_movement.x;
+                    }
+                } else  {
+                    if (can_move(monster_pos.x,monster_pos.y+monster_movement.y)) {
+                        monster_pos.y += monster_movement.y;
+                    }
+                }
+            }
+//            monster_pos = Vector2Add(monster_pos,monster_movement);
+
 
         for (int i = 0; i < MAP_H; ++i) {
             for (int j = 0; j < MAP_W; ++j) {
@@ -106,8 +147,11 @@ int main()
         DrawRectangle(hero_pos.x
         *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,hero_color);
 
+        DrawRectangle(monster_pos.x
+        *TILE_SIZE,monster_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,monster_color);
+
         if(!potion_used) {
-            DrawCircle((potion_pos.x+0.5)*TILE_SIZE,(potion_pos.y+0.5)*TILE_SIZE,TILE_SIZE/2,GREEN);
+            DrawCircle((potion.pos.x+0.5)*TILE_SIZE,(potion.pos.y+0.5)*TILE_SIZE,TILE_SIZE/2,potion.color);
         }
 
         EndDrawing();

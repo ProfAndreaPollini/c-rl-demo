@@ -13,7 +13,7 @@ void set_map_cell(int x, int y, int value) {
     map[x][y] = value;
 }
 
-bool can_hero_move(int x, int y) {
+bool can_move(int x, int y) {
     return map[x][y] == 0;
 }
 

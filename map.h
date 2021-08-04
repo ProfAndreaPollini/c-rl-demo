@@ -13,7 +13,7 @@ static const int MAP_W = 80;
 static const int MAP_H = 50;
 
 void set_map_cell(int x, int y, int value);
-bool can_hero_move(int x, int y);
+bool can_move(int x, int y);
 bool is_wall(int x, int y);
 
 #endif //C_RL_DEMO_MAP_H
