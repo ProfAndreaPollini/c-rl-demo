@@ -22,19 +22,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-const int TILE_SIZE = 16;
-const int MAP_W = 80;
-const int MAP_H = 50;
-
-int map[MAP_W][MAP_H];
-
-void set_map_cell(int x, int y, int value) {
-    map[x][y] = value;
-}
-
-bool can_hero_move(int x, int y) {
-    return map[x][y] == 0;
-}
+#include "map.h"
 
 int main()
 {
@@ -43,6 +31,9 @@ int main()
     int screen_width = MAP_W*TILE_SIZE;
     int screen_height = MAP_H*TILE_SIZE;
     Vector2 hero_pos = {10,10};
+
+    Vector2 potion_pos = {15,20};
+    bool potion_used = false;
 
 
     //map[20][20] = 1;
@@ -96,12 +87,15 @@ int main()
             if (can_hero_move(hero_pos.x+dx,hero_pos.y+dy)) {
                 hero_pos.x +=dx;
                 hero_pos.y +=dy;
+                if (hero_pos.x == potion_pos.x && hero_pos.y == potion_pos.y) {
+                    potion_used = true;
+                }
             }
         }
 
         for (int i = 0; i < MAP_H; ++i) {
             for (int j = 0; j < MAP_W; ++j) {
-                if ( map[j][i] == 1) {
+                if ( is_wall(j,i)) {
                     DrawCircle((j+0.5)*TILE_SIZE,(i+0.5)*TILE_SIZE,TILE_SIZE/2,BLUE);
                 }
             }
@@ -109,6 +103,10 @@ int main()
 
         DrawRectangle(hero_pos.x
         *TILE_SIZE,hero_pos.y*TILE_SIZE,TILE_SIZE,TILE_SIZE,RED);
+
+        if(!potion_used) {
+            DrawCircle((potion_pos.x+0.5)*TILE_SIZE,(potion_pos.y+0.5)*TILE_SIZE,TILE_SIZE/2,GREEN);
+        }
 
         EndDrawing();
         //----------------------------------------------------------------------------------

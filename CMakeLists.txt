@@ -30,9 +30,10 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
 
 endif()
 
-add_executable(c_rl_demo main.c)
+add_executable(c_rl_demo main.c map.h map.c)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
+
 
 
 # Checks if OSX and links appropriate frameworks (Only required on MacOS)
